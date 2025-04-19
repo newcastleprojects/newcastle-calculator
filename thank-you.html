@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container fade-in">
     <img src="assets/logo.png" alt="New Castle Logo" class="logo">
     <h1>Thank You for Requesting Your Estimate!</h1>
 
@@ -27,64 +27,71 @@
 
     <a href="https://newcastleremodel.com/make-an-appointment/ola/services/appointments" class="button">Schedule Your Free Consultation</a>
 
-    <hr>
+    <div class="save-share-section">
+        <h3>Save or Share Your Estimate:</h3>
 
-    <h3>Share This Calculator with a Friend:</h3>
+        <!-- Save Estimate by Email -->
+        <a id="saveEstimateButton" href="#" class="share-button">📧 Save My Estimate</a>
 
-    <div class="share-buttons">
-        <a href="#" id="shareEmail" class="share-button">📧 Share by Email</a>
-        <a href="#" id="shareFacebook" class="share-button">📘 Share on Facebook</a>
+        <!-- Universal Share Buttons -->
+        <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="margin-top: 20px;">
+            <a class="a2a_button_email"></a>
+            <a class="a2a_button_facebook"></a>
+            <a class="a2a_button_copy_link"></a>
+        </div>
+
     </div>
 
-    <hr>
-
-    <a href="index.html" class="button">Return to Calculator</a>
+    <div class="back-to-website" style="margin-top: 30px;">
+        <a href="https://newcastleremodel.com" class="button">Return to Website</a>
+    </div>
 </div>
 
+<!-- AddToAny Share Buttons Script -->
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+
 <script>
-// Get URL Parameters
-function getURLParameter(name) {
-  return decodeURIComponent(
-    (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [,""])[1].replace(/\+/g, '%20')
-  ) || null;
-}
+// Retrieve estimate and timeline from localStorage
+document.addEventListener('DOMContentLoaded', function() {
+    const estimate = localStorage.getItem('estimateAmount');
+    const projectType = localStorage.getItem('projectType');
 
-// Load Estimate and Timeline
-var estimate = getURLParameter('estimate');
-var projectType = getURLParameter('type');
+    if (estimate) {
+        document.getElementById('estimateAmount').innerText = estimate;
+    }
 
-if (estimate) {
-  document.getElementById('estimateAmount').innerText = estimate;
-}
+    let timeline = "";
 
-var timeline = "";
+    switch (projectType) {
+        case "Custom Home":
+            timeline = "Typical Build Timeline: 8–12 months.";
+            break;
+        case "Custom Garage":
+            timeline = "Typical Build Timeline: 4–6 months.";
+            break;
+        case "Custom Home Addition":
+            timeline = "Typical Build Timeline: 6–9 months.";
+            break;
+        case "Glass Sunroom (Walls Only)":
+            timeline = "Typical Build Timeline: 3–5 months.";
+            break;
+        case "Eze-Breeze Sunroom (Walls Only)":
+            timeline = "Typical Build Timeline: 2–4 months.";
+            break;
+        default:
+            timeline = "Timeline varies based on project type.";
+    }
 
-switch (projectType) {
-    case "Custom Home":
-        timeline = "Typical Build Timeline: 8–12 months.";
-        break;
-    case "Custom Garage":
-        timeline = "Typical Build Timeline: 4–6 months.";
-        break;
-    case "Custom Home Addition":
-        timeline = "Typical Build Timeline: 6–9 months.";
-        break;
-    case "Glass Sunroom (Walls Only)":
-        timeline = "Typical Build Timeline: 3–5 months.";
-        break;
-    case "Eze-Breeze Sunroom (Walls Only)":
-        timeline = "Typical Build Timeline: 2–4 months.";
-        break;
-    default:
-        timeline = "Timeline varies based on project type.";
-}
+    if (document.getElementById('projectTimeline')) {
+        document.getElementById('projectTimeline').innerText = timeline;
+    }
 
-document.getElementById('projectTimeline').innerText = timeline;
-
-// Set Share Buttons
-document.getElementById('shareEmail').href = `mailto:?subject=Check out this Free Remodeling Estimate Tool!&body=Hi, I just used the New Castle Remodeling Instant Estimate Calculator — it was quick and helpful! You can try it too here: https://newcastleremodel.com/instant-estimate`;
-
-document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=https://newcastleremodel.com/instant-estimate`;
+    // Save Estimate Email link
+    const saveEstimateBtn = document.getElementById('saveEstimateButton');
+    if (saveEstimateBtn) {
+        saveEstimateBtn.href = `mailto:?subject=My New Castle Estimate&body=Here’s my project estimate: ${estimate}. Contact New Castle for next steps! https://newcastleremodel.com/make-an-appointment`;
+    }
+});
 </script>
 
 </body>
