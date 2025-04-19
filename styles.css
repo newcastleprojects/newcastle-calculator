@@ -13,6 +13,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
     text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 h1, h2, h3 {
@@ -43,7 +44,7 @@ select {
     font-size: 16px;
 }
 
-button {
+button, .button {
     background: orange;
     color: #fff;
     padding: 15px 30px;
@@ -53,11 +54,14 @@ button {
     cursor: pointer;
     box-shadow: 0 0 10px orange;
     margin-top: 20px;
-    transition: background 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-button:hover {
+button:hover, .button:hover {
     background: darkorange;
+    box-shadow: 0 0 15px darkorange;
 }
 
 .logo {
@@ -82,23 +86,9 @@ button:hover {
     margin: 20px 0;
 }
 
-.button {
-    display: inline-block;
-    background: orange;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 18px;
-    margin-top: 15px;
-    box-shadow: 0 0 10px orange;
-}
-
-.share-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
+.share-buttons,
+.save-share-section {
+    margin-top: 30px;
 }
 
 .share-button {
@@ -109,9 +99,22 @@ button:hover {
     border-radius: 10px;
     text-decoration: none;
     font-size: 16px;
+    margin: 5px;
 }
 
 .share-button:hover {
     background: #0056b3;
 }
 
+.back-to-website {
+    margin-top: 30px;
+}
+
+.fade-in {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
