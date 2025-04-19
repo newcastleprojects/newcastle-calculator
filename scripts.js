@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('projectSizeSlider');
     const input = document.getElementById('projectSizeInput');
+    const sizeLabel = document.getElementById('sizeLabel');
 
     if (slider && input) {
         slider.oninput = function() {
@@ -10,6 +11,26 @@ document.addEventListener('DOMContentLoaded', function() {
         input.oninput = function() {
             slider.value = this.value;
         };
+    }
+
+    const projectTypeField = document.getElementById('projectType');
+    if (projectTypeField && sizeLabel) {
+        projectTypeField.addEventListener('change', function() {
+            const projectType = this.value;
+            if (projectType.includes('Sunroom')) {
+                sizeLabel.innerText = '(Measured in Linear Feet)';
+            } else {
+                sizeLabel.innerText = '(Measured in Square Feet)';
+            }
+        });
+    }
+
+    const emailField = document.querySelector('input[name="Email"]');
+    const replyToField = document.getElementById('hiddenReplyTo');
+    if (emailField && replyToField) {
+        emailField.addEventListener('input', function() {
+            replyToField.value = this.value;
+        });
     }
 
     const form = document.getElementById('estimateForm');
