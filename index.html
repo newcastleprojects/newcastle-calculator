@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container fade-in">
     <img src="assets/logo.png" alt="New Castle Logo" class="logo">
     <h1>New Castle Custom Home & Remodeling Estimate Calculator</h1>
     <p>Plan your dream custom home, garage, sunroom, or home addition. Get your personalized estimate instantly!</p>
@@ -55,19 +55,24 @@
         <label>Upload Project Picture (Optional)</label>
         <input type="file" name="attachment" accept=".jpg,.jpeg,.png">
 
+        <div id="errorMessage" style="color:red; font-weight:bold; text-align:center; margin-bottom:10px;"></div>
+
         <button type="submit">Get My Estimate</button>
 
     </form>
 
-    <div id="estimateResult"></div>
-
     <div id="successMessage" style="display:none;">
         <h2>✔️ Estimate Generated!</h2>
         <p>Your project estimate has been securely processed.</p>
-        <a href="thank-you.html" id="viewEstimateButton">View My Estimate</a>
+        <a href="thank-you.html" id="viewEstimateButton" class="button">View My Estimate</a>
+    </div>
+
+    <div class="back-to-website">
+        <a href="https://newcastleremodel.com" class="button">Return to Website</a>
     </div>
 
 </div>
 
 </body>
 </html>
+
