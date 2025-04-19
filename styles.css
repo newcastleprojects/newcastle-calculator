@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,14 +7,24 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 30px auto;
     background: #ffffff;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    text-align: center;
     animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Top Section (Logo, Title, Intro) */
+.top-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    max-width: 200px;
+    margin-bottom: 20px;
 }
 
 h1, h2, h3 {
@@ -25,8 +36,16 @@ p {
     color: #555;
 }
 
-form {
-    margin-top: 20px;
+/* Form Section */
+.form-section {
+    text-align: left;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
 }
 
 input[type="text"],
@@ -36,12 +55,25 @@ input[type="file"],
 input[type="number"],
 textarea,
 select {
-    width: 90%;
+    width: 95%;
     padding: 12px;
-    margin: 10px 0;
+    margin-top: 5px;
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+.size-input {
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
 button, .button {
@@ -64,9 +96,10 @@ button:hover, .button:hover {
     box-shadow: 0 0 15px darkorange;
 }
 
-.logo {
-    max-width: 200px;
-    margin-bottom: 20px;
+/* Centering Buttons */
+.button-center {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .success-box {
@@ -84,10 +117,12 @@ button:hover, .button:hover {
     padding: 20px;
     border-radius: 15px;
     margin: 20px 0;
+    text-align: center;
 }
 
 .save-share-section {
     margin-top: 30px;
+    text-align: center;
 }
 
 .share-button {
@@ -105,10 +140,23 @@ button:hover, .button:hover {
     background: #0056b3;
 }
 
-.back-to-website {
-    margin-top: 30px;
+.required {
+    color: red;
 }
 
+#sizeLabel {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.size-info {
+    font-size: 14px;
+    color: gray;
+    margin-top: 5px;
+}
+
+/* Fade In Animation */
 .fade-in {
     animation: fadeIn 1.5s ease-in-out;
 }
