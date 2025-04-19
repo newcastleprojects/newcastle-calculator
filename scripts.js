@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         projectTypeField.addEventListener('change', function() {
             const projectType = this.value;
             if (projectType.includes('Sunroom')) {
-                sizeLabel.innerText = '(Measured in Linear Feet)';
+                sizeLabel.innerText = "(Measured in Linear Feet)";
             } else {
-                sizeLabel.innerText = '(Measured in Square Feet)';
+                sizeLabel.innerText = "(Measured in Square Feet)";
             }
         });
     }
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             generateEstimate();
+            sendFormData();
         });
     }
 });
@@ -85,7 +86,7 @@ function generateEstimate() {
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
 
-    // Mini confirmation message
+    // Mini confirmation message (for internal flow if needed)
     const successMsg = document.getElementById('successMessage');
     if (successMsg) {
         successMsg.style.display = 'block';
@@ -93,8 +94,29 @@ function generateEstimate() {
 
     // Delay slightly then redirect to Thank You page
     setTimeout(() => {
-        window.location.href = `thank-you.html?estimate=${encodeURIComponent(formattedEstimate)}&type=${encodeURIComponent(projectType)}`;
+        window.location.href = `thank-you.html`;
     }, 1500);
+}
+
+// Background Send to Formspree
+function sendFormData() {
+    const formData = new FormData(document.getElementById('estimateForm'));
+
+    fetch('https://formspree.io/f/xzzelklv', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            console.log("Form successfully submitted to Formspree.");
+        } else {
+            console.error("Error submitting form to Formspree.");
+        }
+    }).catch(error => {
+        console.error("Fetch error:", error);
+    });
 }
 
 // On Thank You Page: Load stored estimate and timeline
@@ -140,3 +162,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
