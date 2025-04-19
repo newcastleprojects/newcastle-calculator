@@ -1,4 +1,4 @@
-// Update project size when sliding or typing
+// Sync slider and input box for project size
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('projectSizeSlider');
     const input = document.getElementById('projectSizeInput');
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Function to generate estimate and redirect
 function generateEstimate() {
     const projectType = document.getElementById('projectType').value;
     const finishQuality = document.getElementById('finishQuality').value;
@@ -59,15 +60,23 @@ function generateEstimate() {
 
     const formattedEstimate = `$${totalEstimate.toLocaleString()}`;
 
-    // Save Estimate into localStorage to pass to Thank You page
+    // Save into localStorage
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
 
-    // Redirect to Thank You page
-    window.location.href = `thank-you.html?estimate=${encodeURIComponent(formattedEstimate)}&type=${encodeURIComponent(projectType)}`;
+    // Mini confirmation message
+    const successMsg = document.getElementById('successMessage');
+    if (successMsg) {
+        successMsg.style.display = 'block';
+    }
+
+    // Delay slightly then redirect to Thank You page
+    setTimeout(() => {
+        window.location.href = `thank-you.html?estimate=${encodeURIComponent(formattedEstimate)}&type=${encodeURIComponent(projectType)}`;
+    }, 1500);
 }
 
-// On Thank You Page: load stored estimate
+// On Thank You Page: Load stored estimate and timeline
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('estimateAmount')) {
         const estimate = localStorage.getItem('estimateAmount');
@@ -103,15 +112,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('projectTimeline').innerText = timeline;
         }
 
-        // Set share buttons
-        const emailShare = document.getElementById('shareEmail');
-        const facebookShare = document.getElementById('shareFacebook');
-        if (emailShare) {
-            emailShare.href = `mailto:?subject=Check out this Free Remodeling Estimate Tool!&body=Hi, I just used the New Castle Remodeling Instant Estimate Calculator — it was quick and helpful! You can try it too here: https://newcastleremodel.com/instant-estimate`;
-        }
-        if (facebookShare) {
-            facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=https://newcastleremodel.com/instant-estimate`;
+        // Save Estimate Email Link Setup
+        const saveEstimateBtn = document.getElementById('saveEstimateButton');
+        if (saveEstimateBtn && estimate) {
+            saveEstimateBtn.href = `mailto:?subject=My New Castle Estimate&body=Here’s my project estimate: ${estimate}. Contact New Castle for next steps! https://newcastleremodel.com/make-an-appointment`;
         }
     }
 });
-
