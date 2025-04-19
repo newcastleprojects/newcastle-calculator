@@ -1,99 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You - New Castle Estimate</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="scripts.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - New Castle Estimate</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="scripts.js"></script>
 </head>
 <body>
 
 <div class="container fade-in">
-    <img src="assets/logo.png" alt="New Castle Logo" class="logo">
-    <h1>Thank You for Requesting Your Estimate!</h1>
+  <img src="assets/logo.png" alt="New Castle Logo" class="logo">
+  <h1>Thank You for Requesting Your Estimate!</h1>
 
-    <div class="success-box">
-        ✅ Your Estimate has been securely processed!
+  <div class="success-box">
+    ✅ Your Estimate has been securely processed!
+  </div>
+
+  <div class="estimate-summary">
+    <h2>Your Estimated Project Cost:</h2>
+    <div id="estimateAmount">Loading Estimate...</div>
+
+    <h3>Estimated Timeline:</h3>
+    <div id="projectTimeline">Loading Timeline...</div>
+  </div>
+
+  <a href="https://newcastleremodel.com/make-an-appointment/ola/services/appointments" class="button">Schedule Your Free Consultation</a>
+
+  <div class="save-share-section">
+    <h3>Save or Share Your Estimate:</h3>
+
+    <!-- Save Estimate by Email -->
+    <a id="saveEstimateButton" href="#" class="share-button">📧 Save My Estimate</a>
+
+    <!-- Universal Share Buttons -->
+    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="margin-top: 20px;">
+      <a class="a2a_button_email"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_copy_link"></a>
     </div>
 
-    <div class="estimate-summary">
-        <h2>Your Estimated Project Cost:</h2>
-        <div id="estimateAmount">Loading Estimate...</div>
+  </div>
 
-        <h3>Estimated Timeline:</h3>
-        <div id="projectTimeline">Loading Timeline...</div>
-    </div>
+  <div class="back-to-website" style="margin-top: 30px;">
+    <a href="https://newcastleremodel.com" class="button">Return to Website</a>
+  </div>
 
-    <a href="https://newcastleremodel.com/make-an-appointment/ola/services/appointments" class="button">Schedule Your Free Consultation</a>
-
-    <div class="save-share-section">
-        <h3>Save or Share Your Estimate:</h3>
-
-        <!-- Save Estimate by Email -->
-        <a id="saveEstimateButton" href="#" class="share-button">📧 Save My Estimate</a>
-
-        <!-- Universal Share Buttons -->
-        <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="margin-top: 20px;">
-            <a class="a2a_button_email"></a>
-            <a class="a2a_button_facebook"></a>
-            <a class="a2a_button_copy_link"></a>
-        </div>
-
-    </div>
-
-    <div class="back-to-website" style="margin-top: 30px;">
-        <a href="https://newcastleremodel.com" class="button">Return to Website</a>
-    </div>
 </div>
 
 <!-- AddToAny Share Buttons Script -->
 <script async src="https://static.addtoany.com/menu/page.js"></script>
 
-<script>
-// Retrieve estimate and timeline from localStorage
-document.addEventListener('DOMContentLoaded', function() {
-    const estimate = localStorage.getItem('estimateAmount');
-    const projectType = localStorage.getItem('projectType');
-
-    if (estimate) {
-        document.getElementById('estimateAmount').innerText = estimate;
-    }
-
-    let timeline = "";
-
-    switch (projectType) {
-        case "Custom Home":
-            timeline = "Typical Build Timeline: 8–12 months.";
-            break;
-        case "Custom Garage":
-            timeline = "Typical Build Timeline: 4–6 months.";
-            break;
-        case "Custom Home Addition":
-            timeline = "Typical Build Timeline: 6–9 months.";
-            break;
-        case "Glass Sunroom (Walls Only)":
-            timeline = "Typical Build Timeline: 3–5 months.";
-            break;
-        case "Eze-Breeze Sunroom (Walls Only)":
-            timeline = "Typical Build Timeline: 2–4 months.";
-            break;
-        default:
-            timeline = "Timeline varies based on project type.";
-    }
-
-    if (document.getElementById('projectTimeline')) {
-        document.getElementById('projectTimeline').innerText = timeline;
-    }
-
-    // Save Estimate Email link
-    const saveEstimateBtn = document.getElementById('saveEstimateButton');
-    if (saveEstimateBtn) {
-        saveEstimateBtn.href = `mailto:?subject=My New Castle Estimate&body=Here’s my project estimate: ${estimate}. Contact New Castle for next steps! https://newcastleremodel.com/make-an-appointment`;
-    }
-});
-</script>
-
 </body>
 </html>
-
