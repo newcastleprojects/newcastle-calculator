@@ -74,13 +74,16 @@ function generateEstimate() {
             break;
     }
 
-    let totalEstimate = pricePerUnit * size;
+    let baseEstimate = pricePerUnit * size;
 
     if (finishQuality === "High-End") {
-        totalEstimate *= 1.2; // +20% for high-end finishes
+        baseEstimate *= 1.2; // +20% for high-end finishes
     }
 
-    const formattedEstimate = `$${totalEstimate.toLocaleString()}`;
+    const lowEstimate = Math.round(baseEstimate * 0.95);
+    const highEstimate = Math.round(baseEstimate * 1.10);
+
+    const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
 
     // Save into localStorage
     localStorage.setItem('estimateAmount', formattedEstimate);
@@ -158,8 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save Estimate Email Link Setup
         const saveEstimateBtn = document.getElementById('saveEstimateButton');
         if (saveEstimateBtn && estimate) {
-            saveEstimateBtn.href = `mailto:?subject=My New Castle Estimate&body=Here’s my project estimate: ${estimate}. Contact New Castle for next steps! https://newcastleremodel.com/make-an-appointment`;
+            saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AHelpful Resources for Your Project:%0D%0A- Natalie Rose Plan: https://newcastleremodel.com/natalie-rose%0D%0A- Nathan Allen Plan: https://newcastleremodel.com/nathan-allen%0D%0A- Affordable House Plans: https://www.thehouseplancompany.com/%0D%0A- Our Remodeling Process Guide: https://newcastleremodel.com/our-remodeling-process%0D%0A%0D%0AEstimate ranges are based on typical conditions and may vary depending on project specifics.%0D%0A%0D%0AThank you for choosing New Castle!`;
         }
     }
 });
-
