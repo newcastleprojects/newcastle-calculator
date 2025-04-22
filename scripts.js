@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to generate estimate and redirect
+// Function to generate estimate
 function generateEstimate() {
     const projectType = document.getElementById('projectType').value;
     const finishQuality = document.getElementById('finishQuality').value;
@@ -89,9 +89,9 @@ function generateEstimate() {
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
 
-    // 🆕 Fill hidden fields for emailing
+    // Fill hidden fields
     document.getElementById('estimateTotalField').value = formattedEstimate;
-    
+
     let timeline = "";
 
     switch (projectType) {
@@ -116,16 +116,11 @@ function generateEstimate() {
 
     document.getElementById('estimatedTimelineField').value = timeline;
 
-    // Mini confirmation message
+    // Show mini confirmation message
     const successMsg = document.getElementById('successMessage');
     if (successMsg) {
         successMsg.style.display = 'block';
     }
-
-    // Delay slightly then redirect to Thank You page
-    setTimeout(() => {
-        window.location.href = `thank-you.html`;
-    }, 1500);
 }
 
 // Background Send to Formspree
@@ -140,12 +135,18 @@ function sendFormData() {
         }
     }).then(response => {
         if (response.ok) {
-            console.log("Form successfully submitted to Formspree.");
+            console.log("✅ Form successfully submitted to Formspree.");
+            // ✅ Redirect AFTER successful submission
+            setTimeout(() => {
+                window.location.href = `thank-you.html`;
+            }, 500);
         } else {
-            console.error("Error submitting form to Formspree.");
+            console.error("❌ Error submitting form to Formspree.");
+            alert("There was an error submitting your estimate. Please try again.");
         }
     }).catch(error => {
-        console.error("Fetch error:", error);
+        console.error("❌ Fetch error:", error);
+        alert("There was a network error. Please try again.");
     });
 }
 
@@ -183,6 +184,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (document.getElementById('projectTimeline')) {
             document.getElementById('projectTimeline').innerText = timeline;
+        }
+
+        // Save My Estimate Email Link
+        const saveEstimateBtn = document.getElementById('saveEstimateButton');
+        if (saveEstimateBtn && estimate) {
+            saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AHelpful Resources for Your Project:%0D%0A- Natalie Rose Plan: https://newcastleremodel.com/natalie-rose%0D%0A- Nathan Allen Plan: https://newcastleremodel.com/nathan-allen%0D%0A- Affordable House Plans: https://www.thehouseplancompany.com/%0D%0A- Our Remodeling Process Guide: https://newcastleremodel.com/our-remodeling-process%0D%0A%0D%0AEstimate ranges are based on typical conditions and may vary depending on project specifics.%0D%0A%0D%0AThank you for choosing New Castle!`;
         }
     }
 });
