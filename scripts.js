@@ -1,14 +1,16 @@
-// scripts.js — Final Working Version (Formspree restored, fetch removed)
+// scripts.js — Final Fix for Formspree + Estimate Display
 
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('estimateForm');
   if (form) {
-    form.addEventListener('submit', function () {
-      generateEstimate(); // Store estimate to localStorage before native form submit
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent default form action
+      generateEstimate(); // Store estimate to localStorage
+      sendFormData(); // Send data to Formspree in background
     });
   }
 
-  // Handle Thank You Page data population
+  // Thank You Page Logic
   if (document.getElementById('estimateAmount')) {
     const estimate = localStorage.getItem('estimateAmount');
     const projectType = localStorage.getItem('projectType');
@@ -92,4 +94,27 @@ function generateEstimate() {
 
   localStorage.setItem('estimateAmount', formattedEstimate);
   localStorage.setItem('projectType', projectType);
+}
+
+function sendFormData() {
+  const form = document.getElementById('estimateForm');
+  const formData = new FormData(form);
+
+  fetch('https://formspree.io/f/xzzelklv', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      console.log("Form submitted to Formspree.");
+      window.location.href = "/thank-you.html"; // Redirect after success
+    } else {
+      alert("There was an error sending your estimate. Please try again.");
+    }
+  }).catch(error => {
+    alert("There was an error sending your estimate. Please try again.");
+    console.error("Fetch error:", error);
+  });
 }
