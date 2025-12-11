@@ -1,7 +1,17 @@
 // Updated script.js to ensure Thank You page works properly
-// v2.3.2 — Forced update to trigger Vercel refresh
+// v2.3.3 — LocalStorage redirect fix
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Form submission logic
+  const form = document.getElementById('estimateForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      generateEstimate();
+      sendFormData();
+    });
+  }
+
   // Thank You Page Load
   if (document.getElementById('estimateAmount')) {
     const estimate = localStorage.getItem('estimateAmount');
@@ -42,3 +52,74 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 });
+
+// Estimate calculation + redirect to Thank You page
+function generateEstimate() {
+  const projectType = document.getElementById('projectType').value;
+  const finishQuality = document.getElementById('finishQuality').value;
+  const size = document.getElementById('projectSizeInput').value;
+
+  if (!projectType || !finishQuality || size <= 0) {
+    alert("Please complete all required fields and select a valid project size.");
+    return;
+  }
+
+  let pricePerUnit = 0;
+
+  switch (projectType) {
+    case "Custom Home":
+      pricePerUnit = 160;
+      break;
+    case "Custom Garage":
+      pricePerUnit = 150;
+      break;
+    case "Custom Home Addition":
+      pricePerUnit = 200;
+      break;
+    case "Glass Sunroom (Walls Only)":
+      pricePerUnit = 350;
+      break;
+    case "Eze-Breeze Sunroom (Walls Only)":
+      pricePerUnit = 250;
+      break;
+  }
+
+  let baseEstimate = pricePerUnit * size;
+
+  if (finishQuality === "High-End") {
+    baseEstimate *= 1.2; // +20% for high-end finishes
+  }
+
+  const lowEstimate = Math.round(baseEstimate * 0.95);
+  const highEstimate = Math.round(baseEstimate * 1.10);
+
+  const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
+
+  localStorage.setItem('estimateAmount', formattedEstimate);
+  localStorage.setItem('projectType', projectType);
+
+  setTimeout(() => {
+    window.location.href = "/thank-you.html";
+  }, 1000);
+}
+
+// Background Send to Formspree
+function sendFormData() {
+  const formData = new FormData(document.getElementById('estimateForm'));
+
+  fetch('https://formspree.io/f/xzzelklv', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      console.log("Form successfully submitted to Formspree.");
+    } else {
+      console.error("Error submitting form to Formspree.");
+    }
+  }).catch(error => {
+    console.error("Fetch error:", error);
+  });
+}
