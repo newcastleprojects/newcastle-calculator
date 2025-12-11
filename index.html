@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +27,7 @@
 
   <!-- Form Section -->
   <form id="estimateForm" action="https://formspree.io/f/xzzelklv" method="POST" enctype="multipart/form-data" class="form-section">
-
-    <!-- Hidden Reply-To -->
     <input type="hidden" name="_replyto" id="hiddenReplyTo">
-    <input type="hidden" name="Estimate Total" id="estimateTotalField">
-    <input type="hidden" name="Estimated Timeline" id="estimatedTimelineField">
 
     <h2>Contact Information</h2>
 
@@ -95,7 +92,7 @@
 
     <!-- Centered Submit Button -->
     <div class="button-center">
-      <button type="submit">Get My Estimate</button>
+      <button type="submit" onclick="generateEstimate()">Get My Estimate</button>
     </div>
 
   </form>
