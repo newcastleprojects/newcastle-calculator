@@ -1,15 +1,14 @@
-// scripts.js — Final Working Version (Back to Native Formspree Submit)
+// scripts.js — Final Working Version (Formspree restored, fetch removed)
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Just trigger estimate calculation and let native form submit do the rest
   const form = document.getElementById('estimateForm');
   if (form) {
-    form.addEventListener('submit', function (e) {
-      generateEstimate();
+    form.addEventListener('submit', function () {
+      generateEstimate(); // Store estimate to localStorage before native form submit
     });
   }
 
-  // Thank You Page Load
+  // Handle Thank You Page data population
   if (document.getElementById('estimateAmount')) {
     const estimate = localStorage.getItem('estimateAmount');
     const projectType = localStorage.getItem('projectType');
@@ -20,12 +19,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let timeline = '';
     switch (projectType) {
-      case 'Custom Home': timeline = 'Typical Build Timeline: 8–12 months.'; break;
-      case 'Custom Garage': timeline = 'Typical Build Timeline: 4–6 months.'; break;
-      case 'Custom Home Addition': timeline = 'Typical Build Timeline: 6–9 months.'; break;
-      case 'Glass Sunroom (Walls Only)': timeline = 'Typical Build Timeline: 3–5 months.'; break;
-      case 'Eze-Breeze Sunroom (Walls Only)': timeline = 'Typical Build Timeline: 2–4 months.'; break;
-      default: timeline = 'Timeline varies based on project type.';
+      case 'Custom Home':
+        timeline = 'Typical Build Timeline: 8–12 months.';
+        break;
+      case 'Custom Garage':
+        timeline = 'Typical Build Timeline: 4–6 months.';
+        break;
+      case 'Custom Home Addition':
+        timeline = 'Typical Build Timeline: 6–9 months.';
+        break;
+      case 'Glass Sunroom (Walls Only)':
+        timeline = 'Typical Build Timeline: 3–5 months.';
+        break;
+      case 'Eze-Breeze Sunroom (Walls Only)':
+        timeline = 'Typical Build Timeline: 2–4 months.';
+        break;
+      default:
+        timeline = 'Timeline varies based on project type.';
     }
 
     if (document.getElementById('projectTimeline')) {
@@ -39,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Estimate calculation only — no redirect or fetch
 function generateEstimate() {
   const projectType = document.getElementById('projectType').value;
   const finishQuality = document.getElementById('finishQuality').value;
@@ -51,19 +60,34 @@ function generateEstimate() {
   }
 
   let pricePerUnit = 0;
+
   switch (projectType) {
-    case "Custom Home": pricePerUnit = 160; break;
-    case "Custom Garage": pricePerUnit = 150; break;
-    case "Custom Home Addition": pricePerUnit = 200; break;
-    case "Glass Sunroom (Walls Only)": pricePerUnit = 350; break;
-    case "Eze-Breeze Sunroom (Walls Only)": pricePerUnit = 250; break;
+    case "Custom Home":
+      pricePerUnit = 160;
+      break;
+    case "Custom Garage":
+      pricePerUnit = 150;
+      break;
+    case "Custom Home Addition":
+      pricePerUnit = 200;
+      break;
+    case "Glass Sunroom (Walls Only)":
+      pricePerUnit = 350;
+      break;
+    case "Eze-Breeze Sunroom (Walls Only)":
+      pricePerUnit = 250;
+      break;
   }
 
   let baseEstimate = pricePerUnit * size;
-  if (finishQuality === "High-End") baseEstimate *= 1.2;
+
+  if (finishQuality === "High-End") {
+    baseEstimate *= 1.2;
+  }
 
   const lowEstimate = Math.round(baseEstimate * 0.95);
   const highEstimate = Math.round(baseEstimate * 1.10);
+
   const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
 
   localStorage.setItem('estimateAmount', formattedEstimate);
