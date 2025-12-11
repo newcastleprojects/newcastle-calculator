@@ -1,13 +1,15 @@
+// scripts.js — Final Working Version (Back to Native Formspree Submit)
+
 document.addEventListener('DOMContentLoaded', function () {
+  // Just trigger estimate calculation and let native form submit do the rest
   const form = document.getElementById('estimateForm');
   if (form) {
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
       generateEstimate();
-      sendFormData(); // Now handles redirect itself
     });
   }
 
+  // Thank You Page Load
   if (document.getElementById('estimateAmount')) {
     const estimate = localStorage.getItem('estimateAmount');
     const projectType = localStorage.getItem('projectType');
@@ -26,9 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
       default: timeline = 'Timeline varies based on project type.';
     }
 
-    const timelineElem = document.getElementById('projectTimeline');
-    if (timelineElem) {
-      timelineElem.innerText = timeline;
+    if (document.getElementById('projectTimeline')) {
+      document.getElementById('projectTimeline').innerText = timeline;
     }
 
     const saveEstimateBtn = document.getElementById('saveEstimateButton');
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Estimate calculation
+// Estimate calculation only — no redirect or fetch
 function generateEstimate() {
   const projectType = document.getElementById('projectType').value;
   const finishQuality = document.getElementById('finishQuality').value;
@@ -67,28 +68,4 @@ function generateEstimate() {
 
   localStorage.setItem('estimateAmount', formattedEstimate);
   localStorage.setItem('projectType', projectType);
-}
-
-// Background Send + THEN Redirect
-function sendFormData() {
-  const formData = new FormData(document.getElementById('estimateForm'));
-
-  fetch('https://formspree.io/f/xzzelklv', {
-    method: 'POST',
-    body: formData,
-    headers: { 'Accept': 'application/json' }
-  }).then(response => {
-    if (response.ok) {
-      console.log("Form successfully submitted to Formspree.");
-      setTimeout(() => {
-        window.location.href = "/thank-you.html";
-      }, 500); // Redirect AFTER Formspree confirms
-    } else {
-      console.error("Error submitting form to Formspree.");
-      alert("There was an issue sending your estimate. Please try again.");
-    }
-  }).catch(error => {
-    console.error("Fetch error:", error);
-    alert("Network error. Please try again.");
-  });
 }
