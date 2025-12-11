@@ -1,16 +1,18 @@
-// scripts.js — Final Fix for Formspree + Estimate Display
+// Updated scripts.js with enhanced Formspree error logging
+// v2.3.4 — Debugging Formspree Submission Error
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Form submission logic
   const form = document.getElementById('estimateForm');
   if (form) {
     form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Prevent default form action
-      generateEstimate(); // Store estimate to localStorage
-      sendFormData(); // Send data to Formspree in background
+      e.preventDefault();
+      generateEstimate();
+      sendFormData();
     });
   }
 
-  // Thank You Page Logic
+  // Thank You Page Load
   if (document.getElementById('estimateAmount')) {
     const estimate = localStorage.getItem('estimateAmount');
     const projectType = localStorage.getItem('projectType');
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+// Estimate calculation + redirect to Thank You page
 function generateEstimate() {
   const projectType = document.getElementById('projectType').value;
   const finishQuality = document.getElementById('finishQuality').value;
@@ -84,7 +87,7 @@ function generateEstimate() {
   let baseEstimate = pricePerUnit * size;
 
   if (finishQuality === "High-End") {
-    baseEstimate *= 1.2;
+    baseEstimate *= 1.2; // +20% for high-end finishes
   }
 
   const lowEstimate = Math.round(baseEstimate * 0.95);
@@ -94,11 +97,15 @@ function generateEstimate() {
 
   localStorage.setItem('estimateAmount', formattedEstimate);
   localStorage.setItem('projectType', projectType);
+
+  setTimeout(() => {
+    window.location.href = "/thank-you.html";
+  }, 1000);
 }
 
+// Background Send to Formspree with error logging
 function sendFormData() {
-  const form = document.getElementById('estimateForm');
-  const formData = new FormData(form);
+  const formData = new FormData(document.getElementById('estimateForm'));
 
   fetch('https://formspree.io/f/xzzelklv', {
     method: 'POST',
@@ -106,15 +113,16 @@ function sendFormData() {
     headers: {
       'Accept': 'application/json'
     }
-  }).then(response => {
+  }).then(async response => {
     if (response.ok) {
-      console.log("Form submitted to Formspree.");
-      window.location.href = "/thank-you.html"; // Redirect after success
+      console.log("✅ Form successfully submitted to Formspree.");
     } else {
-      alert("There was an error sending your estimate. Please try again.");
+      const errorDetails = await response.text();
+      console.error("❌ Formspree Error Response:", errorDetails);
+      alert("There was an issue sending your estimate. Please try again.");
     }
   }).catch(error => {
-    alert("There was an error sending your estimate. Please try again.");
-    console.error("Fetch error:", error);
+    console.error("❌ Network error during fetch:", error);
+    alert("There was an issue sending your estimate. Please try again.");
   });
 }
