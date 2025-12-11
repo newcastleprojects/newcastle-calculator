@@ -1,8 +1,8 @@
-// Updated scripts.js with enhanced Formspree error logging
-// v2.3.4 — Debugging Formspree Submission Error
+// scripts.js — v2.4.0
 
+// Ensure DOM is ready
 document.addEventListener('DOMContentLoaded', function () {
-  // Form submission logic
+  // Estimate Form Submission
   const form = document.getElementById('estimateForm');
   if (form) {
     form.addEventListener('submit', function (e) {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Thank You Page Load
+  // Thank You Page Logic
   if (document.getElementById('estimateAmount')) {
     const estimate = localStorage.getItem('estimateAmount');
     const projectType = localStorage.getItem('projectType');
@@ -53,41 +53,41 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Estimate calculation + redirect to Thank You page
+// Estimate Calculator
 function generateEstimate() {
   const projectType = document.getElementById('projectType').value;
   const finishQuality = document.getElementById('finishQuality').value;
-  const size = document.getElementById('projectSizeInput').value;
+  const size = parseFloat(document.getElementById('projectSizeInput').value);
 
   if (!projectType || !finishQuality || size <= 0) {
-    alert("Please complete all required fields and select a valid project size.");
+    alert('Please complete all required fields and select a valid project size.');
     return;
   }
 
   let pricePerUnit = 0;
 
   switch (projectType) {
-    case "Custom Home":
+    case 'Custom Home':
       pricePerUnit = 160;
       break;
-    case "Custom Garage":
+    case 'Custom Garage':
       pricePerUnit = 150;
       break;
-    case "Custom Home Addition":
+    case 'Custom Home Addition':
       pricePerUnit = 200;
       break;
-    case "Glass Sunroom (Walls Only)":
+    case 'Glass Sunroom (Walls Only)':
       pricePerUnit = 350;
       break;
-    case "Eze-Breeze Sunroom (Walls Only)":
+    case 'Eze-Breeze Sunroom (Walls Only)':
       pricePerUnit = 250;
       break;
   }
 
   let baseEstimate = pricePerUnit * size;
 
-  if (finishQuality === "High-End") {
-    baseEstimate *= 1.2; // +20% for high-end finishes
+  if (finishQuality === 'High-End') {
+    baseEstimate *= 1.2;
   }
 
   const lowEstimate = Math.round(baseEstimate * 0.95);
@@ -99,11 +99,11 @@ function generateEstimate() {
   localStorage.setItem('projectType', projectType);
 
   setTimeout(() => {
-    window.location.href = "/thank-you.html";
+    window.location.href = '/thank-you.html';
   }, 1000);
 }
 
-// Background Send to Formspree with error logging
+// Send Data to Formspree
 function sendFormData() {
   const formData = new FormData(document.getElementById('estimateForm'));
 
@@ -111,18 +111,18 @@ function sendFormData() {
     method: 'POST',
     body: formData,
     headers: {
-      'Accept': 'application/json'
+      Accept: 'application/json'
     }
-  }).then(async response => {
-    if (response.ok) {
-      console.log("✅ Form successfully submitted to Formspree.");
-    } else {
-      const errorDetails = await response.text();
-      console.error("❌ Formspree Error Response:", errorDetails);
-      alert("There was an issue sending your estimate. Please try again.");
-    }
-  }).catch(error => {
-    console.error("❌ Network error during fetch:", error);
-    alert("There was an issue sending your estimate. Please try again.");
-  });
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Form successfully submitted to Formspree.');
+      } else {
+        alert('There was an issue sending your estimate. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      alert('There was an issue sending your estimate. Please try again.');
+    });
 }
