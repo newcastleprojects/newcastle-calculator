@@ -83,24 +83,32 @@ function generateEstimate() {
 
     const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
 
+    // Primary storage
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
 
-    // URL fallback for Thank You page
-    window.history.replaceState(
-        {},
-        "",
-        `thank-you.html?estimate=${encodeURIComponent(formattedEstimate)}&projectType=${encodeURIComponent(projectType)}`
-    );
+    // Guaranteed cross-navigation fallback
+    window.name = JSON.stringify({
+        estimateAmount: formattedEstimate,
+        projectType: projectType
+    });
 }
 
 // On Thank You Page: Load stored estimate and timeline
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('estimateAmount')) {
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const estimate = localStorage.getItem('estimateAmount') || urlParams.get('estimate');
-        const projectType = localStorage.getItem('projectType') || urlParams.get('projectType');
+        let estimate = localStorage.getItem('estimateAmount');
+        let projectType = localStorage.getItem('projectType');
+
+        // Fallback to window.name if storage is empty
+        if ((!estimate || !projectType) && window.name) {
+            try {
+                const data = JSON.parse(window.name);
+                estimate = estimate || data.estimateAmount;
+                projectType = projectType || data.projectType;
+            } catch (e) {}
+        }
 
         if (estimate) {
             document.getElementById('estimateAmount').innerText = estimate;
