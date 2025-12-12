@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             showInlineEstimate();
-            // ⏱️ 1.5 second delay before submit
-            setTimeout(() => form.submit(), 1500);
+            // ⏱️ 3 second delay before submit
+            setTimeout(() => form.submit(), 3000);
         });
     }
 });
