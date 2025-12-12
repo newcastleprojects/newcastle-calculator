@@ -28,8 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const form = document.getElementById('estimateForm');
     if (form) {
-        form.addEventListener('submit', function () {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
             showInlineEstimate();
+            setTimeout(() => form.submit(), 500);
         });
     }
 });
@@ -56,13 +58,13 @@ function showInlineEstimate() {
     const low = Math.round(base * 0.95);
     const high = Math.round(base * 1.10);
 
-    const box = document.getElementById('inlineEstimate');
-    box.innerHTML = `
+    const estimateBox = document.getElementById('inlineEstimate');
+    estimateBox.innerHTML = `
         <h3 style="margin-top:20px;">Your Estimated Project Cost Range:</h3>
         <strong>$${low.toLocaleString()} – $${high.toLocaleString()}</strong>
         <p style="margin-top:10px;font-size:14px;color:#555;">
             This estimate is based on typical construction costs and will be finalized during your free consultation.
         </p>
     `;
-    box.style.display = "block";
+    estimateBox.style.display = "block";
 }
