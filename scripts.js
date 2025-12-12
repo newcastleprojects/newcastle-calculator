@@ -4,23 +4,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('projectSizeInput');
     const sizeLabel = document.getElementById('sizeLabel');
 
-    slider.oninput = () => input.value = slider.value;
-    input.oninput = () => slider.value = input.value;
+    if (slider && input) {
+        slider.oninput = () => input.value = slider.value;
+        input.oninput = () => slider.value = input.value;
+    }
 
-    document.getElementById('projectType').addEventListener('change', function () {
-        sizeLabel.innerText = this.value.includes('Sunroom')
-            ? "(Measured in Linear Feet)"
-            : "(Measured in Square Feet)";
-    });
+    const projectTypeField = document.getElementById('projectType');
+    if (projectTypeField && sizeLabel) {
+        projectTypeField.addEventListener('change', function () {
+            sizeLabel.innerText = this.value.includes('Sunroom')
+                ? "(Measured in Linear Feet)"
+                : "(Measured in Square Feet)";
+        });
+    }
 
-    const emailField = document.querySelector('input[name="email"]');
-    const replyToField = document.getElementById('hiddenReplyTo');
-    emailField.addEventListener('input', () => {
-        replyToField.value = emailField.value;
-    });
-
-    document.getElementById('calculateEstimateBtn')
-        .addEventListener('click', calculateAndShowEstimate);
+    document
+      .getElementById('calculateEstimateBtn')
+      .addEventListener('click', calculateAndShowEstimate);
 });
 
 function calculateAndShowEstimate() {
@@ -34,15 +34,15 @@ function calculateAndShowEstimate() {
         return;
     }
 
-    let rate = {
+    const rates = {
         "Custom Home": 160,
         "Custom Garage": 150,
         "Custom Home Addition": 200,
         "Glass Sunroom (Walls Only)": 350,
         "Eze-Breeze Sunroom (Walls Only)": 250
-    }[projectType];
+    };
 
-    let base = rate * size;
+    let base = rates[projectType] * size;
     if (finishQuality === "High-End") base *= 1.2;
 
     const low = Math.round(base * 0.95);
