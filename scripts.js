@@ -85,13 +85,22 @@ function generateEstimate() {
 
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
+
+    // URL fallback for Thank You page
+    window.history.replaceState(
+        {},
+        "",
+        `thank-you.html?estimate=${encodeURIComponent(formattedEstimate)}&projectType=${encodeURIComponent(projectType)}`
+    );
 }
 
 // On Thank You Page: Load stored estimate and timeline
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('estimateAmount')) {
-        const estimate = localStorage.getItem('estimateAmount');
-        const projectType = localStorage.getItem('projectType');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const estimate = localStorage.getItem('estimateAmount') || urlParams.get('estimate');
+        const projectType = localStorage.getItem('projectType') || urlParams.get('projectType');
 
         if (estimate) {
             document.getElementById('estimateAmount').innerText = estimate;
@@ -121,6 +130,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (document.getElementById('projectTimeline')) {
             document.getElementById('projectTimeline').innerText = timeline;
+        }
+
+        const saveEstimateBtn = document.getElementById('saveEstimateButton');
+        if (saveEstimateBtn && estimate) {
+            saveEstimateBtn.href =
+                `mailto:?subject=Your New Castle Estimate & Next Steps&body=` +
+                `Hi,%0D%0A%0D%0A` +
+                `Thank you for using the New Castle Estimate Calculator!%0D%0A` +
+                `Here’s your personalized project estimate range:%0D%0A` +
+                `${estimate}%0D%0A%0D%0A` +
+                `Schedule your free consultation here:%0D%0A` +
+                `https://newcastleremodel.com/make-an-appointment%0D%0A%0D%0A` +
+                `Thank you for choosing New Castle!`;
         }
     }
 });
