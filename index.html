@@ -11,44 +11,50 @@
 
 <div class="container">
 
-  <!-- Top Centered Branding Section -->
   <div class="top-section">
     <img src="assets/logo.png" alt="New Castle Logo" class="logo">
     <h1>New Castle Custom Home & Remodeling Estimate Calculator</h1>
     <p>Plan your dream custom home, garage, sunroom, or home addition. Get your personalized estimate instantly!</p>
   </div>
 
-  <!-- SEO Optimized Welcome Paragraph -->
   <div class="welcome-paragraph">
     <p><strong>Welcome to New Castle's Instant Estimate Calculator</strong><br>
-    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas. Whether you're planning a custom home, garage, home addition, glass sunroom, or Eze-Breeze sunroom, our free calculator provides you with a fast, personalized project estimate based on local construction costs. Start building your dream with New Castle — the trusted custom builder of the Carolinas.</p>
+    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas.</p>
   </div>
 
-  <!-- Form Section -->
-  <form id="estimateForm" action="https://formspree.io/f/xzzelklv" method="POST" enctype="multipart/form-data" class="form-section">
+  <form id="estimateForm"
+        action="https://formspree.io/f/xzzelklv"
+        method="POST"
+        enctype="multipart/form-data"
+        class="form-section">
 
-    <!-- Hidden Reply-To -->
+    <!-- REQUIRED -->
     <input type="hidden" name="_replyto" id="hiddenReplyTo">
+    <input type="hidden" name="_redirect" value="thank-you.html">
+
+    <!-- ADDED (DATA PASS-THROUGH) -->
+    <input type="hidden" name="estimate" id="estimateField">
+    <input type="hidden" name="projectType" id="projectTypeField">
 
     <h2>Contact Information</h2>
 
-    <label>First Name <span class="required">*</span></label>
-    <input type="text" name="First Name" placeholder="John" required>
+    <label>First Name *</label>
+    <input type="text" name="First Name" required>
 
-    <label>Last Name <span class="required">*</span></label>
-    <input type="text" name="Last Name" placeholder="Smith" required>
+    <label>Last Name *</label>
+    <input type="text" name="Last Name" required>
 
-    <label>Email Address <span class="required">*</span></label>
-    <input type="email" name="email" placeholder="email@example.com" required>
+    <label>Email Address *</label>
+    <input type="email" name="email" required>
 
-    <label>Phone Number <span class="required">*</span></label>
-    <input type="tel" name="Phone" placeholder="(843) 555-1234" required>
+    <label>Phone Number *</label>
+    <input type="tel" name="Phone" required>
 
     <h2>Project Details</h2>
 
-    <label>Project Type <span class="required">*</span></label>
+    <label>Project Type *</label>
     <select name="Project Type" id="projectType" required>
-      <option value="">Select Project Type</option>
+      <option value="">Select</option>
       <option value="Custom Home">Custom Home</option>
       <option value="Custom Garage">Custom Garage</option>
       <option value="Custom Home Addition">Custom Home Addition</option>
@@ -56,51 +62,22 @@
       <option value="Eze-Breeze Sunroom (Walls Only)">Eze-Breeze Sunroom (Walls Only)</option>
     </select>
 
-    <label>Finish Quality <span class="required">*</span></label>
-    <select name="Finish Quality" id="finishQuality" required>
-      <option value="">Select Finish Quality</option>
+    <label>Finish Quality *</label>
+    <select id="finishQuality" required>
+      <option value="">Select</option>
       <option value="Standard">Standard</option>
       <option value="High-End">High-End</option>
     </select>
 
-    <label>Project Size <span class="required">*</span></label>
-    <div id="sizeLabel">(Sq. Ft. or Lin. Ft.)</div>
-    <input type="range" id="projectSizeSlider" name="Project Size" min="0" max="10000" value="0">
+    <label>Project Size</label>
+    <input type="range" id="projectSizeSlider" min="0" max="10000" value="0">
     <input type="number" id="projectSizeInput" value="0" class="size-input">
-    <div class="size-info">Homes, Garages, Additions = Sq. Ft. / Sunrooms = Lin. Ft.</div>
 
-    <h2>Optional Details</h2>
-
-    <label>Project Address (Optional)</label>
-    <input type="text" name="Project Address" placeholder="800 Legion St, Conway, SC, 29526">
-
-    <label>Preferred Start Timeframe (Optional)</label>
-    <select name="Preferred Start Timeframe">
-      <option value="">Preferred Start Timeframe</option>
-      <option value="Immediately">Immediately</option>
-      <option value="1-3 Months">1-3 Months</option>
-      <option value="3-6 Months">3-6 Months</option>
-      <option value="6+ Months">6+ Months</option>
-    </select>
-
-    <label>Short Project Description (Optional)</label>
-    <textarea name="Project Description" placeholder="Tell us about your project..."></textarea>
-
-    <label>Upload Project Picture (Optional)</label>
-    <input type="file" name="attachment" accept=".jpg,.jpeg,.png">
-
-    <div id="errorMessage"></div>
-
-    <!-- Centered Submit Button -->
     <div class="button-center">
       <button type="submit">Get My Estimate</button>
     </div>
 
   </form>
-
-  <div class="button-center" style="margin-top: 30px;">
-    <a href="https://newcastleremodel.com" class="button">Return to Website</a>
-  </div>
 
 </div>
 
