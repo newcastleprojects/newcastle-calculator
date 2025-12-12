@@ -11,21 +11,28 @@
 <body>
 
 <div class="container">
+
+  <!-- Top Centered Branding Section -->
   <div class="top-section">
     <img src="assets/logo.png" alt="New Castle Logo" class="logo">
     <h1>New Castle Custom Home, Remodeling & Sunroom Estimate Calculator</h1>
     <p>Plan your dream custom home, garage, sunroom, or home addition. Get your personalized estimate instantly!</p>
   </div>
 
+  <!-- SEO Optimized Welcome Paragraph -->
   <div class="welcome-paragraph">
     <p><strong>Welcome to New Castle's Instant Estimate Calculator</strong><br>
     New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas. Whether you're planning a custom home, garage, home addition, glass sunroom, or Eze-Breeze sunroom, our free calculator provides you with a fast, personalized project estimate based on local construction costs. Start building your dream with New Castle — the trusted custom builder of the Carolinas.</p>
   </div>
 
-  <form id="estimateForm" method="POST" enctype="multipart/form-data" class="form-section">
+  <!-- Form Section -->
+  <form id="estimateForm" action="https://formspree.io/f/xzzelklv" method="POST" enctype="multipart/form-data" class="form-section">
+
+    <!-- Hidden Reply-To -->
     <input type="hidden" name="_replyto" id="hiddenReplyTo">
 
     <h2>Contact Information</h2>
+
     <label>First Name <span class="required">*</span></label>
     <input type="text" name="First Name" placeholder="John" required>
 
@@ -39,6 +46,7 @@
     <input type="tel" name="Phone" placeholder="(843) 555-1234" required>
 
     <h2>Project Details</h2>
+
     <label>Project Type <span class="required">*</span></label>
     <select name="Project Type" id="projectType" required>
       <option value="">Select Project Type</option>
@@ -63,6 +71,7 @@
     <div class="size-info">Homes, Garages, Additions = Sq. Ft. / Sunrooms = Lin. Ft.</div>
 
     <h2>Optional Details</h2>
+
     <label>Project Address (Optional)</label>
     <input type="text" name="Project Address" placeholder="800 Legion St, Conway, SC, 29526">
 
@@ -83,14 +92,17 @@
 
     <div id="errorMessage"></div>
 
+    <!-- Centered Submit Button -->
     <div class="button-center">
-      <button type="submit">Get My Estimate</button>
+      <button type="submit" onclick="generateEstimate()">Get My Estimate</button>
     </div>
+
   </form>
 
   <div class="button-center" style="margin-top: 30px;">
     <a href="https://newcastleremodel.com" class="button">Return to Website</a>
   </div>
+
 </div>
 
 </body>
