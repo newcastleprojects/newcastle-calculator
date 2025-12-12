@@ -19,7 +19,7 @@
 
   <div class="welcome-paragraph">
     <p><strong>Welcome to New Castle's Instant Estimate Calculator</strong><br>
-    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas.</p>
+    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas. Whether you're planning a custom home, garage, home addition, glass sunroom, or Eze-Breeze sunroom, our free calculator provides you with a fast, personalized project estimate based on local construction costs.</p>
   </div>
 
   <form id="estimateForm"
@@ -33,22 +33,22 @@
     <h2>Contact Information</h2>
 
     <label>First Name <span class="required">*</span></label>
-    <input type="text" name="First Name" required>
+    <input type="text" name="First Name" placeholder="John" required>
 
     <label>Last Name <span class="required">*</span></label>
-    <input type="text" name="Last Name" required>
+    <input type="text" name="Last Name" placeholder="Smith" required>
 
     <label>Email Address <span class="required">*</span></label>
-    <input type="email" name="email" required>
+    <input type="email" name="email" placeholder="email@example.com" required>
 
     <label>Phone Number <span class="required">*</span></label>
-    <input type="tel" name="Phone" required>
+    <input type="tel" name="Phone" placeholder="(843) 555-1234" required>
 
     <h2>Project Details</h2>
 
     <label>Project Type <span class="required">*</span></label>
-    <select id="projectType" name="Project Type" required>
-      <option value="">Select</option>
+    <select name="Project Type" id="projectType" required>
+      <option value="">Select Project Type</option>
       <option value="Custom Home">Custom Home</option>
       <option value="Custom Garage">Custom Garage</option>
       <option value="Custom Home Addition">Custom Home Addition</option>
@@ -57,31 +57,56 @@
     </select>
 
     <label>Finish Quality <span class="required">*</span></label>
-    <select id="finishQuality" name="Finish Quality" required>
-      <option value="">Select</option>
+    <select name="Finish Quality" id="finishQuality" required>
+      <option value="">Select Finish Quality</option>
       <option value="Standard">Standard</option>
       <option value="High-End">High-End</option>
     </select>
 
-    <label>Project Size</label>
+    <label>Project Size <span class="required">*</span></label>
     <div id="sizeLabel">(Sq. Ft. or Lin. Ft.)</div>
-    <input type="range" id="projectSizeSlider" min="0" max="10000" value="0">
+    <input type="range" id="projectSizeSlider" name="Project Size" min="0" max="10000" value="0">
     <input type="number" id="projectSizeInput" value="0" class="size-input">
+    <div class="size-info">Homes, Garages, Additions = Sq. Ft. / Sunrooms = Lin. Ft.</div>
 
-    <!-- 🔹 INLINE ESTIMATE -->
-    <div id="inlineEstimate" style="display:none; margin-top:20px;"></div>
+    <h2>Optional Details</h2>
 
-    <!-- 🔹 FIRST BUTTON: CALCULATE ONLY -->
+    <label>Project Address (Optional)</label>
+    <input type="text" name="Project Address">
+
+    <label>Preferred Start Timeframe (Optional)</label>
+    <select name="Preferred Start Timeframe">
+      <option value="">Preferred Start Timeframe</option>
+      <option value="Immediately">Immediately</option>
+      <option value="1-3 Months">1-3 Months</option>
+      <option value="3-6 Months">3-6 Months</option>
+      <option value="6+ Months">6+ Months</option>
+    </select>
+
+    <label>Short Project Description (Optional)</label>
+    <textarea name="Project Description"></textarea>
+
+    <label>Upload Project Picture (Optional)</label>
+    <input type="file" name="attachment" accept=".jpg,.jpeg,.png">
+
+    <!-- INLINE ESTIMATE DISPLAY (already in your file) -->
+    <div id="inlineEstimate" style="display:none;"></div>
+
     <div class="button-center">
+      <!-- CHANGED: was type="submit" -->
       <button type="button" id="calculateEstimateBtn">Get My Estimate</button>
     </div>
 
-    <!-- 🔹 SECOND BUTTON: ACTUAL SUBMIT -->
+    <!-- NEW: final submit appears only after estimate is shown -->
     <div class="button-center" id="finalSubmitWrapper" style="display:none;">
       <button type="submit">Get My Full Estimate</button>
     </div>
 
   </form>
+
+  <div class="button-center" style="margin-top: 30px;">
+    <a href="https://newcastleremodel.com" class="button">Return to Website</a>
+  </div>
 
 </div>
 
