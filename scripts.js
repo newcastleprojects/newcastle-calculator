@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const emailField = document.querySelector('input[name="Email"]');
+    const emailField = document.querySelector('input[name="email"]');
     const replyToField = document.getElementById('hiddenReplyTo');
     if (emailField && replyToField) {
         emailField.addEventListener('input', function() {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to generate estimate and redirect
+// Function to generate estimate
 function generateEstimate() {
     const projectType = document.getElementById('projectType').value;
     const finishQuality = document.getElementById('finishQuality').value;
@@ -77,7 +77,7 @@ function generateEstimate() {
     let baseEstimate = pricePerUnit * size;
 
     if (finishQuality === "High-End") {
-        baseEstimate *= 1.2; // +20% for high-end finishes
+        baseEstimate *= 1.2;
     }
 
     const lowEstimate = Math.round(baseEstimate * 0.95);
@@ -85,20 +85,13 @@ function generateEstimate() {
 
     const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
 
-    // Save into localStorage
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
 
-    // Mini confirmation message (for internal flow if needed)
     const successMsg = document.getElementById('successMessage');
     if (successMsg) {
         successMsg.style.display = 'block';
     }
-
-    // Delay slightly then redirect to Thank You page
-    setTimeout(() => {
-        window.location.href = `thank-you.html`;
-    }, 1500);
 }
 
 // Background Send to Formspree
@@ -114,6 +107,7 @@ function sendFormData() {
     }).then(response => {
         if (response.ok) {
             console.log("Form successfully submitted to Formspree.");
+            window.location.href = `thank-you.html`;
         } else {
             console.error("Error submitting form to Formspree.");
         }
@@ -158,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('projectTimeline').innerText = timeline;
         }
 
-        // Save Estimate Email Link Setup
         const saveEstimateBtn = document.getElementById('saveEstimateButton');
         if (saveEstimateBtn && estimate) {
             saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AHelpful Resources for Your Project:%0D%0A- Natalie Rose Plan: https://newcastleremodel.com/natalie-rose%0D%0A- Nathan Allen Plan: https://newcastleremodel.com/nathan-allen%0D%0A- Affordable House Plans: https://www.thehouseplancompany.com/%0D%0A- Our Remodeling Process Guide: https://newcastleremodel.com/our-remodeling-process%0D%0A%0D%0AEstimate ranges are based on typical conditions and may vary depending on project specifics.%0D%0A%0D%0AThank you for choosing New Castle!`;
