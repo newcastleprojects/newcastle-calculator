@@ -1,51 +1,51 @@
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
 }
 
 .container {
-  max-width: 900px;
-  margin: 30px auto;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  animation: fadeIn 1.5s ease-in-out;
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Top Section */
+/* Top Section (Logo, Title, Intro) */
 .top-section {
-  text-align: center;
-  margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .logo {
-  max-width: 200px;
-  margin-bottom: 20px;
+    max-width: 200px;
+    margin-bottom: 20px;
 }
 
 h1, h2, h3 {
-  color: #333;
+    color: #333;
 }
 
 p {
-  font-size: 18px;
-  color: #555;
+    font-size: 18px;
+    color: #555;
 }
 
-/* Form Styling */
+/* Form Section */
 .form-section {
-  text-align: left;
+    text-align: left;
 }
 
 form label {
-  display: block;
-  font-weight: bold;
-  margin-top: 15px;
-  color: #333;
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
 }
 
 input[type="text"],
@@ -55,116 +55,113 @@ input[type="file"],
 input[type="number"],
 textarea,
 select {
-  width: 95%;
-  padding: 12px;
-  margin-top: 5px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  box-sizing: border-box;
+    width: 95%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 textarea {
-  resize: vertical;
-  height: 120px;
+    resize: vertical;
+    height: 120px;
 }
 
 .size-input {
-  width: 100px;
-  padding: 10px;
-  text-align: center;
-  margin-top: 10px;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
 button, .button {
-  background: orange;
-  color: #fff;
-  padding: 15px 30px;
-  font-size: 18px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0 0 10px orange;
-  margin-top: 20px;
-  display: inline-block;
-  text-decoration: none;
-  transition: all 0.3s ease;
+    background: orange;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px orange;
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
 button:hover, .button:hover {
-  background: darkorange;
-  box-shadow: 0 0 15px darkorange;
+    background: darkorange;
+    box-shadow: 0 0 15px darkorange;
 }
 
+/* Centering Buttons */
 .button-center {
-  text-align: center;
-  margin-top: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
-/* Success Message */
 .success-box {
-  background: linear-gradient(45deg, orange, #ff9900);
-  color: white;
-  padding: 20px;
-  border-radius: 15px;
-  font-size: 24px;
-  margin: 30px 0;
-  box-shadow: 0 0 15px orange;
+    background: linear-gradient(45deg, orange, #ff9900);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 24px;
+    margin: 30px 0;
+    box-shadow: 0 0 15px orange;
 }
 
-/* Estimate Display */
 .estimate-summary {
-  background-color: #f7f7f7;
-  padding: 20px;
-  border-radius: 15px;
-  margin: 20px 0;
-  text-align: center;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: center;
 }
 
-/* Save & Share */
 .save-share-section {
-  margin-top: 30px;
-  text-align: center;
+    margin-top: 30px;
+    text-align: center;
 }
 
 .share-button {
-  display: inline-block;
-  background: #007BFF;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 5px;
+    display: inline-block;
+    background: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px;
 }
 
 .share-button:hover {
-  background: #0056b3;
+    background: #0056b3;
 }
 
-/* Labels and Helpers */
 .required {
-  color: red;
+    color: red;
 }
 
 #sizeLabel {
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .size-info {
-  font-size: 14px;
-  color: gray;
-  margin-top: 5px;
+    font-size: 14px;
+    color: gray;
+    margin-top: 5px;
 }
 
-/* Fade-in Animation */
+/* Fade In Animation */
 .fade-in {
-  animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
