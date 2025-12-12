@@ -1,34 +1,28 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>New Castle Custom Home, Remodeling & Sunroom Estimate Calculator</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
   <script defer src="scripts.js"></script>
 </head>
 <body>
 
 <div class="container">
 
-  <!-- Top Centered Branding Section -->
   <div class="top-section">
     <img src="assets/logo.png" alt="New Castle Logo" class="logo">
     <h1>New Castle Custom Home, Remodeling & Sunroom Estimate Calculator</h1>
     <p>Plan your dream custom home, garage, sunroom, or home addition. Get your personalized estimate instantly!</p>
   </div>
 
-  <!-- SEO Optimized Welcome Paragraph -->
   <div class="welcome-paragraph">
     <p><strong>Welcome to New Castle's Instant Estimate Calculator</strong><br>
-    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas. Whether you're planning a custom home, garage, home addition, glass sunroom, or Eze-Breeze sunroom, our free calculator provides you with a fast, personalized project estimate based on local construction costs. Start building your dream with New Castle — the trusted custom builder of the Carolinas.</p>
+    Serving Myrtle Beach, Conway, Loris, Longs, and Horry County. Plan a home, garage, addition, or sunroom. Get fast, personalized local estimates with New Castle — your trusted builder.</p>
   </div>
 
-  <!-- Form Section -->
-  <form id="estimateForm" action="https://formspree.io/f/xzzelklv" method="POST" enctype="multipart/form-data" class="form-section">
-
-    <!-- Hidden Reply-To -->
+  <form id="estimateForm" class="form-section">
     <input type="hidden" name="_replyto" id="hiddenReplyTo">
 
     <h2>Contact Information</h2>
@@ -92,11 +86,9 @@
 
     <div id="errorMessage"></div>
 
-    <!-- Centered Submit Button -->
     <div class="button-center">
-      <button type="submit" onclick="generateEstimate()">Get My Estimate</button>
+      <button type="submit" onclick="handleFormSubmit(event)">Get My Estimate</button>
     </div>
-
   </form>
 
   <div class="button-center" style="margin-top: 30px;">
