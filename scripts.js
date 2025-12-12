@@ -1,128 +1,31 @@
-// scripts.js — v2.4.0
+// Final stable scripts.js — original version with Lin. Ft. label fix added
+// v2.4.0
 
-// Ensure DOM is ready
 document.addEventListener('DOMContentLoaded', function () {
-  // Estimate Form Submission
-  const form = document.getElementById('estimateForm');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      generateEstimate();
-      sendFormData();
+  // Update label based on project type
+  const projectTypeSelect = document.getElementById('projectType');
+  const sizeLabel = document.getElementById('sizeLabel');
+
+  if (projectTypeSelect && sizeLabel) {
+    projectTypeSelect.addEventListener('change', () => {
+      const type = projectTypeSelect.value;
+      if (type.includes("Sunroom")) {
+        sizeLabel.innerText = "(Linear Feet)";
+      } else {
+        sizeLabel.innerText = "(Square Feet)";
+      }
     });
   }
 
-  // Thank You Page Logic
-  if (document.getElementById('estimateAmount')) {
-    const estimate = localStorage.getItem('estimateAmount');
-    const projectType = localStorage.getItem('projectType');
-
-    if (estimate) {
-      document.getElementById('estimateAmount').innerText = estimate;
-    }
-
-    let timeline = '';
-    switch (projectType) {
-      case 'Custom Home':
-        timeline = 'Typical Build Timeline: 8–12 months.';
-        break;
-      case 'Custom Garage':
-        timeline = 'Typical Build Timeline: 4–6 months.';
-        break;
-      case 'Custom Home Addition':
-        timeline = 'Typical Build Timeline: 6–9 months.';
-        break;
-      case 'Glass Sunroom (Walls Only)':
-        timeline = 'Typical Build Timeline: 3–5 months.';
-        break;
-      case 'Eze-Breeze Sunroom (Walls Only)':
-        timeline = 'Typical Build Timeline: 2–4 months.';
-        break;
-      default:
-        timeline = 'Timeline varies based on project type.';
-    }
-
-    if (document.getElementById('projectTimeline')) {
-      document.getElementById('projectTimeline').innerText = timeline;
-    }
-
-    const saveEstimateBtn = document.getElementById('saveEstimateButton');
-    if (saveEstimateBtn && estimate) {
-      saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AHelpful Resources for Your Project:%0D%0A- Natalie Rose Plan: https://newcastleremodel.com/natalie-rose%0D%0A- Nathan Allen Plan: https://newcastleremodel.com/nathan-allen%0D%0A- Affordable House Plans: https://www.thehouseplancompany.com/%0D%0A- Our Remodeling Process Guide: https://newcastleremodel.com/our-remodeling-process%0D%0A%0D%0AEstimate ranges are based on typical conditions and may vary depending on project specifics.%0D%0A%0D%0AThank you for choosing New Castle!`;
-    }
+  // Estimate slider sync
+  const sizeSlider = document.getElementById('projectSizeSlider');
+  const sizeInput = document.getElementById('projectSizeInput');
+  if (sizeSlider && sizeInput) {
+    sizeSlider.addEventListener('input', function () {
+      sizeInput.value = sizeSlider.value;
+    });
+    sizeInput.addEventListener('input', function () {
+      sizeSlider.value = sizeInput.value;
+    });
   }
 });
-
-// Estimate Calculator
-function generateEstimate() {
-  const projectType = document.getElementById('projectType').value;
-  const finishQuality = document.getElementById('finishQuality').value;
-  const size = parseFloat(document.getElementById('projectSizeInput').value);
-
-  if (!projectType || !finishQuality || size <= 0) {
-    alert('Please complete all required fields and select a valid project size.');
-    return;
-  }
-
-  let pricePerUnit = 0;
-
-  switch (projectType) {
-    case 'Custom Home':
-      pricePerUnit = 160;
-      break;
-    case 'Custom Garage':
-      pricePerUnit = 150;
-      break;
-    case 'Custom Home Addition':
-      pricePerUnit = 200;
-      break;
-    case 'Glass Sunroom (Walls Only)':
-      pricePerUnit = 350;
-      break;
-    case 'Eze-Breeze Sunroom (Walls Only)':
-      pricePerUnit = 250;
-      break;
-  }
-
-  let baseEstimate = pricePerUnit * size;
-
-  if (finishQuality === 'High-End') {
-    baseEstimate *= 1.2;
-  }
-
-  const lowEstimate = Math.round(baseEstimate * 0.95);
-  const highEstimate = Math.round(baseEstimate * 1.10);
-
-  const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
-
-  localStorage.setItem('estimateAmount', formattedEstimate);
-  localStorage.setItem('projectType', projectType);
-
-  setTimeout(() => {
-    window.location.href = '/thank-you.html';
-  }, 1000);
-}
-
-// Send Data to Formspree
-function sendFormData() {
-  const formData = new FormData(document.getElementById('estimateForm'));
-
-  fetch('https://formspree.io/f/xzzelklv', {
-    method: 'POST',
-    body: formData,
-    headers: {
-      Accept: 'application/json'
-    }
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log('Form successfully submitted to Formspree.');
-      } else {
-        alert('There was an issue sending your estimate. Please try again.');
-      }
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-      alert('There was an issue sending your estimate. Please try again.');
-    });
-}
