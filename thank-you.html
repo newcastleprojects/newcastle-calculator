@@ -1,87 +1,46 @@
+<!-- thank-you.html — Final Fixed Version -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You - New Castle Estimate</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You | New Castle Estimate</title>
+  <link rel="stylesheet" href="styles.css"/>
   <script defer src="scripts.js"></script>
 </head>
 <body>
+  <div class="container">
 
-<div class="container">
-
-  <!-- Top Centered Branding Section -->
-  <div class="top-section">
-    <img src="assets/logo.png" alt="New Castle Logo" class="logo">
-    <h1>Thank You for Requesting Your Estimate!</h1>
-  </div>
-
-  <div class="success-box">
-    ✅ Your Estimate has been securely processed!
-  </div>
-
-  <div class="estimate-summary">
-    <h2>Your Estimated Project Cost:</h2>
-    <div id="estimateAmount">Loading Estimate...</div>
-
-    <h3>Estimated Timeline:</h3>
-    <div id="projectTimeline">Timeline varies based on project type.</div>
-
-    <!-- Estimate Explanation -->
-    <div style="margin-top: 20px; font-size: 16px; color: #555;">
-      <p>
-        <strong>About Your Estimate:</strong><br>
-        This estimate is based on typical construction variables such as project size,
-        material selections, site conditions, and permitting. Final pricing will be
-        determined during your free consultation.
-      </p>
+    <div class="top-section">
+      <img src="assets/logo.png" alt="New Castle Logo" class="logo">
+      <h1>Thank You for Requesting Your Estimate!</h1>
+      <p>✅ Your Estimate has been securely processed!</p>
     </div>
 
-    <!-- Local Pricing Notice -->
-    <div style="margin-top: 20px; font-size: 14px; color: gray;">
-      <p>
-        <strong>Local Pricing Notice:</strong><br>
-        Estimate ranges are based on typical construction costs for Myrtle Beach,
-        North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and surrounding
-        Horry County areas.
-      </p>
-    </div>
-  </div>
+    <div class="thank-you-content">
+      <h2>Your Estimated Project Cost:</h2>
+      <div id="estimateAmount" class="estimate-display">Loading Estimate...</div>
 
-  <!-- Call to Action -->
-  <div class="button-center">
-    <a href="https://newcastleremodel.com/make-an-appointment/ola/services/appointments" class="button">
-      Schedule Your Free Consultation
-    </a>
-  </div>
+      <p id="projectTimeline" class="timeline-display">Timeline varies based on project type.</p>
 
-  <!-- Save / Share Section -->
-  <div class="save-share-section">
-    <h3>Want to save your estimate for later?</h3>
-    <div class="button-center">
-      <a id="saveEstimateButton" href="#" class="share-button">📧 Save My Estimate</a>
-    </div>
+      <div class="button-center">
+        <a href="https://newcastleremodel.com/make-an-appointment" class="button">Schedule Your Free Consultation</a>
+      </div>
 
-    <h3 style="margin-top: 20px;">Want to help a friend plan their dream project too?</h3>
-    <div class="button-center" style="margin-top: 10px;">
-      <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-        <a class="a2a_button_email"></a>
-        <a class="a2a_button_facebook"></a>
-        <a class="a2a_button_copy_link"></a>
+      <hr style="margin: 30px 0;">
+
+      <h3>Want to save your estimate for later?</h3>
+      <a id="saveEstimateButton" href="#" class="button">📧 Save My Estimate</a>
+
+      <h3 style="margin-top: 20px;">Want to help a friend plan their dream project too?</h3>
+      <a href="mailto:?subject=Check out this estimate calculator&body=Hey! I found this awesome estimate calculator for custom home projects. Check it out: https://newcastleremodel.com" class="button">📧 Share by Email</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://newcastleremodel.com" class="button" target="_blank">📘 Share on Facebook</a>
+
+      <div class="button-center" style="margin-top: 40px;">
+        <a href="index.html" class="button">Return to Calculator</a>
       </div>
     </div>
+
   </div>
-
-  <!-- Return Button -->
-  <div class="button-center" style="margin-top: 30px;">
-    <a href="https://newcastleremodel.com" class="button">Return to Website</a>
-  </div>
-
-</div>
-
-<!-- Share Script -->
-<script async src="https://static.addtoany.com/menu/page.js"></script>
-
 </body>
 </html>
