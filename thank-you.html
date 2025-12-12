@@ -10,7 +10,6 @@
 
 <div class="container">
 
-  <!-- Top Centered Branding Section -->
   <div class="top-section">
     <img src="assets/logo.png" alt="New Castle Logo" class="logo">
     <h1>Thank You for Requesting Your Estimate!</h1>
@@ -27,73 +26,36 @@
     <h3>Estimated Timeline:</h3>
     <div id="projectTimeline">Loading Timeline...</div>
 
-    <!-- Estimate Range Explanation -->
-    <div class="range-explanation" style="margin-top: 20px; font-size: 16px; color: #555;">
-      <p><strong>About Your Estimate Range:</strong><br>
-      This estimate range is based on typical construction variables such as project design choices, material selections, site conditions, and permitting. Final pricing will be determined during your free consultation, ensuring a customized and accurate proposal for your project.</p>
-    </div>
-
-    <!-- Local Pricing Disclaimer -->
-    <div class="local-pricing" style="margin-top: 20px; font-size: 14px; color: gray;">
-      <p><strong>Local Pricing Notice:</strong><br>
-      Estimate ranges are based on typical construction and remodeling costs for the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and surrounding Horry County areas.</p>
-    </div>
+    <p style="margin-top:15px;color:#555;">
+      This estimate range is based on typical construction variables and will be finalized during your free consultation.
+    </p>
   </div>
 
-  <!-- Centered Main Action Button -->
   <div class="button-center">
     <a href="https://newcastleremodel.com/make-an-appointment/ola/services/appointments" class="button">
       Schedule Your Free Consultation
     </a>
   </div>
 
-  <div class="save-share-section">
-    <h3>Save or Share Your Estimate:</h3>
-
-    <div class="button-center">
-      <a id="saveEstimateButton" href="#" class="share-button">📧 Save My Estimate</a>
-    </div>
-
-    <div class="button-center" style="margin-top: 20px;">
-      <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-        <a class="a2a_button_email"></a>
-        <a class="a2a_button_facebook"></a>
-        <a class="a2a_button_copy_link"></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="button-center" style="margin-top: 30px;">
-    <a href="https://newcastleremodel.com" class="button">Return to Website</a>
-  </div>
-
 </div>
 
-<!-- AddToAny Share Buttons Script -->
-<script async src="https://static.addtoany.com/menu/page.js"></script>
-
-<!-- ✅ ESTIMATE DISPLAY LOGIC (ONLY ADDITION) -->
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const estimate = params.get('estimate');
-  const projectType = params.get('projectType');
+  const data = sessionStorage.getItem('estimateData');
 
-  if (estimate) {
+  if (data) {
+    const { estimate, projectType } = JSON.parse(data);
     document.getElementById('estimateAmount').innerText = estimate;
-    document.getElementById('saveEstimateButton').href =
-      `mailto:?subject=Your New Castle Estimate&body=Your estimate range is ${estimate}`;
-  }
 
-  const timelines = {
-    "Custom Home": "Typical Build Timeline: 8–12 months.",
-    "Custom Garage": "Typical Build Timeline: 4–6 months.",
-    "Custom Home Addition": "Typical Build Timeline: 6–9 months.",
-    "Glass Sunroom (Walls Only)": "Typical Build Timeline: 3–5 months.",
-    "Eze-Breeze Sunroom (Walls Only)": "Typical Build Timeline: 2–4 months."
-  };
+    const timelines = {
+      "Custom Home": "Typical Build Timeline: 8–12 months.",
+      "Custom Garage": "Typical Build Timeline: 4–6 months.",
+      "Custom Home Addition": "Typical Build Timeline: 6–9 months.",
+      "Glass Sunroom (Walls Only)": "Typical Build Timeline: 3–5 months.",
+      "Eze-Breeze Sunroom (Walls Only)": "Typical Build Timeline: 2–4 months."
+    };
 
-  if (projectType && timelines[projectType]) {
-    document.getElementById('projectTimeline').innerText = timelines[projectType];
+    document.getElementById('projectTimeline').innerText =
+      timelines[projectType] || "Timeline varies based on project type.";
   }
 </script>
 
