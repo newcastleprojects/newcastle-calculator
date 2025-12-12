@@ -28,16 +28,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const form = document.getElementById('estimateForm');
     if (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            showInlineEstimate();
-            // ⏱️ 3 second delay before submit
-            setTimeout(() => form.submit(), 3000);
+        form.addEventListener('submit', function () {
+            storeEstimateForThankYou();
+            // DO NOT preventDefault
+            // Native submit → captcha → email
         });
     }
 });
 
-function showInlineEstimate() {
+function storeEstimateForThankYou() {
     const projectType = document.getElementById('projectType').value;
     const finishQuality = document.getElementById('finishQuality').value;
     const size = Number(document.getElementById('projectSizeInput').value);
@@ -59,13 +58,11 @@ function showInlineEstimate() {
     const low = Math.round(base * 0.95);
     const high = Math.round(base * 1.10);
 
-    const estimateBox = document.getElementById('inlineEstimate');
-    estimateBox.innerHTML = `
-        <h3 style="margin-top:20px;">Your Estimated Project Cost Range:</h3>
-        <strong>$${low.toLocaleString()} – $${high.toLocaleString()}</strong>
-        <p style="margin-top:10px;font-size:14px;color:#555;">
-            This estimate is based on typical construction costs and will be finalized during your free consultation.
-        </p>
-    `;
-    estimateBox.style.display = "block";
+    sessionStorage.setItem(
+        'estimateData',
+        JSON.stringify({
+            estimate: `$${low.toLocaleString()} – $${high.toLocaleString()}`,
+            projectType
+        })
+    );
 }
