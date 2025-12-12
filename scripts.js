@@ -87,11 +87,6 @@ function generateEstimate() {
 
     localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
-
-    const successMsg = document.getElementById('successMessage');
-    if (successMsg) {
-        successMsg.style.display = 'block';
-    }
 }
 
 // Background Send to Formspree
@@ -105,7 +100,7 @@ function sendFormData() {
             'Accept': 'application/json'
         }
     }).then(response => {
-        if (response.ok) {
+        if (response.ok || response.type === 'opaqueredirect') {
             console.log("Form successfully submitted to Formspree.");
             window.location.href = `thank-you.html`;
         } else {
@@ -154,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const saveEstimateBtn = document.getElementById('saveEstimateButton');
         if (saveEstimateBtn && estimate) {
-            saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AHelpful Resources for Your Project:%0D%0A- Natalie Rose Plan: https://newcastleremodel.com/natalie-rose%0D%0A- Nathan Allen Plan: https://newcastleremodel.com/nathan-allen%0D%0A- Affordable House Plans: https://www.thehouseplancompany.com/%0D%0A- Our Remodeling Process Guide: https://newcastleremodel.com/our-remodeling-process%0D%0A%0D%0AEstimate ranges are based on typical conditions and may vary depending on project specifics.%0D%0A%0D%0AThank you for choosing New Castle!`;
+            saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AThank you for choosing New Castle!`;
         }
     }
 });
