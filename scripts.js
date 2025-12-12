@@ -1,22 +1,23 @@
 // Sync slider and input box for project size
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('projectSizeSlider');
     const input = document.getElementById('projectSizeInput');
     const sizeLabel = document.getElementById('sizeLabel');
 
     if (slider && input) {
-        slider.oninput = function () {
+        slider.oninput = function() {
             input.value = this.value;
         };
-        input.oninput = function () {
+        input.oninput = function() {
             slider.value = this.value;
         };
     }
 
     const projectTypeField = document.getElementById('projectType');
     if (projectTypeField && sizeLabel) {
-        projectTypeField.addEventListener('change', function () {
-            if (this.value.includes('Sunroom')) {
+        projectTypeField.addEventListener('change', function() {
+            const projectType = this.value;
+            if (projectType.includes('Sunroom')) {
                 sizeLabel.innerText = "(Measured in Linear Feet)";
             } else {
                 sizeLabel.innerText = "(Measured in Square Feet)";
@@ -27,92 +28,141 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailField = document.querySelector('input[name="email"]');
     const replyToField = document.getElementById('hiddenReplyTo');
     if (emailField && replyToField) {
-        emailField.addEventListener('input', function () {
+        emailField.addEventListener('input', function() {
             replyToField.value = this.value;
         });
     }
 
     const form = document.getElementById('estimateForm');
     if (form) {
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
-            generateEstimate();
-            submitToFormspree();
+            const ok = generateEstimate();
+            if (!ok) return;
+            sendFormDataAndRedirect();
         });
     }
 });
 
-// Generate estimate and store it
+// Function to generate estimate (no redirect here)
 function generateEstimate() {
     const projectType = document.getElementById('projectType').value;
     const finishQuality = document.getElementById('finishQuality').value;
-    const size = Number(document.getElementById('projectSizeInput').value);
+    const size = document.getElementById('projectSizeInput').value;
 
     if (!projectType || !finishQuality || size <= 0) {
         alert("Please complete all required fields and select a valid project size.");
-        return;
+        return false;
     }
 
     let pricePerUnit = 0;
 
     switch (projectType) {
-        case "Custom Home": pricePerUnit = 160; break;
-        case "Custom Garage": pricePerUnit = 150; break;
-        case "Custom Home Addition": pricePerUnit = 200; break;
-        case "Glass Sunroom (Walls Only)": pricePerUnit = 350; break;
-        case "Eze-Breeze Sunroom (Walls Only)": pricePerUnit = 250; break;
+        case "Custom Home":
+            pricePerUnit = 160;
+            break;
+        case "Custom Garage":
+            pricePerUnit = 150;
+            break;
+        case "Custom Home Addition":
+            pricePerUnit = 200;
+            break;
+        case "Glass Sunroom (Walls Only)":
+            pricePerUnit = 350;
+            break;
+        case "Eze-Breeze Sunroom (Walls Only)":
+            pricePerUnit = 250;
+            break;
     }
 
-    let estimate = pricePerUnit * size;
-    if (finishQuality === "High-End") estimate *= 1.2;
+    let baseEstimate = pricePerUnit * size;
 
-    const low = Math.round(estimate * 0.95);
-    const high = Math.round(estimate * 1.10);
-    const formatted = `$${low.toLocaleString()} – $${high.toLocaleString()}`;
+    if (finishQuality === "High-End") {
+        baseEstimate *= 1.2; // +20% for high-end finishes
+    }
 
-    localStorage.setItem('estimateAmount', formatted);
+    const lowEstimate = Math.round(baseEstimate * 0.95);
+    const highEstimate = Math.round(baseEstimate * 1.10);
+
+    const formattedEstimate = `$${lowEstimate.toLocaleString()} – $${highEstimate.toLocaleString()}`;
+
+    // Save into localStorage
+    localStorage.setItem('estimateAmount', formattedEstimate);
     localStorage.setItem('projectType', projectType);
+
+    // Mini confirmation message (for internal flow if needed)
+    const successMsg = document.getElementById('successMessage');
+    if (successMsg) {
+        successMsg.style.display = 'block';
+    }
+
+    return true;
 }
 
-// Send form, then redirect manually
-function submitToFormspree() {
+// Submit to Formspree, then redirect
+function sendFormDataAndRedirect() {
     const formData = new FormData(document.getElementById('estimateForm'));
 
     fetch('https://formspree.io/f/xzzelklv', {
         method: 'POST',
         body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: {
+            'Accept': 'application/json'
+        },
+        keepalive: true
+    }).then(response => {
+        if (response.ok) {
+            console.log("Form successfully submitted to Formspree.");
+        } else {
+            console.error("Error submitting form to Formspree.");
+        }
+    }).catch(error => {
+        console.error("Fetch error:", error);
     }).finally(() => {
-        window.location.href = 'thank-you.html';
+        window.location.href = `thank-you.html`;
     });
 }
 
-// Thank You page loader
-document.addEventListener('DOMContentLoaded', function () {
-    const estimateEl = document.getElementById('estimateAmount');
-    if (!estimateEl) return;
+// On Thank You Page: Load stored estimate and timeline
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('estimateAmount')) {
+        const estimate = localStorage.getItem('estimateAmount');
+        const projectType = localStorage.getItem('projectType');
 
-    const estimate = localStorage.getItem('estimateAmount');
-    const projectType = localStorage.getItem('projectType');
+        if (estimate) {
+            document.getElementById('estimateAmount').innerText = estimate;
+        }
 
-    if (estimate) {
-        estimateEl.innerText = estimate;
-    }
+        let timeline = "";
 
-    const timelineMap = {
-        "Custom Home": "Typical Build Timeline: 8–12 months.",
-        "Custom Garage": "Typical Build Timeline: 4–6 months.",
-        "Custom Home Addition": "Typical Build Timeline: 6–9 months.",
-        "Glass Sunroom (Walls Only)": "Typical Build Timeline: 3–5 months.",
-        "Eze-Breeze Sunroom (Walls Only)": "Typical Build Timeline: 2–4 months."
-    };
+        switch (projectType) {
+            case "Custom Home":
+                timeline = "Typical Build Timeline: 8–12 months.";
+                break;
+            case "Custom Garage":
+                timeline = "Typical Build Timeline: 4–6 months.";
+                break;
+            case "Custom Home Addition":
+                timeline = "Typical Build Timeline: 6–9 months.";
+                break;
+            case "Glass Sunroom (Walls Only)":
+                timeline = "Typical Build Timeline: 3–5 months.";
+                break;
+            case "Eze-Breeze Sunroom (Walls Only)":
+                timeline = "Typical Build Timeline: 2–4 months.";
+                break;
+            default:
+                timeline = "Timeline varies based on project type.";
+        }
 
-    document.getElementById('projectTimeline').innerText =
-        timelineMap[projectType] || "Timeline varies based on project type.";
+        if (document.getElementById('projectTimeline')) {
+            document.getElementById('projectTimeline').innerText = timeline;
+        }
 
-    const saveBtn = document.getElementById('saveEstimateButton');
-    if (saveBtn && estimate) {
-        saveBtn.href =
-            `mailto:?subject=Your New Castle Estimate&body=Your estimate range is ${estimate}`;
+        // Save Estimate Email Link Setup
+        const saveEstimateBtn = document.getElementById('saveEstimateButton');
+        if (saveEstimateBtn && estimate) {
+            saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AHelpful Resources for Your Project:%0D%0A- Natalie Rose Plan: https://newcastleremodel.com/natalie-rose%0D%0A- Nathan Allen Plan: https://newcastleremodel.com/nathan-allen%0D%0A- Affordable House Plans: https://www.thehouseplancompany.com/%0D%0A- Our Remodeling Process Guide: https://newcastleremodel.com/our-remodeling-process%0D%0A%0D%0AEstimate ranges are based on typical conditions and may vary depending on project specifics.%0D%0A%0D%0AThank you for choosing New Castle!`;
+        }
     }
 });
