@@ -21,16 +21,13 @@
   <!-- SEO Optimized Welcome Paragraph -->
   <div class="welcome-paragraph">
     <p><strong>Welcome to New Castle's Instant Estimate Calculator</strong><br>
-    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas. Whether you're planning a custom home, garage, home addition, glass sunroom, or Eze-Breeze sunroom, our free calculator provides you with a fast, personalized project estimate based on local construction costs.</p>
+    New Castle proudly serves the Myrtle Beach, North Myrtle Beach, Murrells Inlet, Conway, Loris, Longs, and greater Horry County areas. Whether you're planning a custom home, garage, home addition, glass sunroom, or Eze-Breeze sunroom, our free calculator provides you with a fast, personalized project estimate based on local construction costs. Start building your dream with New Castle — the trusted custom builder of the Carolinas.</p>
   </div>
 
   <!-- Form Section -->
-  <form id="estimateForm"
-        action="https://formspree.io/f/xzzelklv"
-        method="POST"
-        enctype="multipart/form-data"
-        class="form-section">
+  <form id="estimateForm" action="https://formspree.io/f/xzzelklv" method="POST" enctype="multipart/form-data" class="form-section">
 
+    <!-- Hidden Reply-To -->
     <input type="hidden" name="_replyto" id="hiddenReplyTo">
 
     <h2>Contact Information</h2>
@@ -42,7 +39,7 @@
     <input type="text" name="Last Name" placeholder="Smith" required>
 
     <label>Email Address <span class="required">*</span></label>
-    <input type="email" name="email" placeholder="email@example.com" required>
+    <input type="email" name="Email" placeholder="email@example.com" required>
 
     <label>Phone Number <span class="required">*</span></label>
     <input type="tel" name="Phone" placeholder="(843) 555-1234" required>
@@ -75,7 +72,7 @@
     <h2>Optional Details</h2>
 
     <label>Project Address (Optional)</label>
-    <input type="text" name="Project Address">
+    <input type="text" name="Project Address" placeholder="800 Legion St, Conway, SC, 29526">
 
     <label>Preferred Start Timeframe (Optional)</label>
     <select name="Preferred Start Timeframe">
@@ -87,16 +84,23 @@
     </select>
 
     <label>Short Project Description (Optional)</label>
-    <textarea name="Project Description"></textarea>
+    <textarea name="Project Description" placeholder="Tell us about your project..."></textarea>
 
     <label>Upload Project Picture (Optional)</label>
     <input type="file" name="attachment" accept=".jpg,.jpeg,.png">
 
+    <div id="errorMessage"></div>
+
+    <!-- Centered Submit Button -->
     <div class="button-center">
       <button type="submit">Get My Estimate</button>
     </div>
 
   </form>
+
+  <div class="button-center" style="margin-top: 30px;">
+    <a href="https://newcastleremodel.com" class="button">Return to Website</a>
+  </div>
 
 </div>
 
