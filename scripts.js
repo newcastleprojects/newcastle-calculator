@@ -35,10 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const form = document.getElementById('estimateForm');
     if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+        form.addEventListener('submit', function() {
             generateEstimate();
-            sendFormData();
         });
     }
 });
@@ -89,28 +87,6 @@ function generateEstimate() {
     localStorage.setItem('projectType', projectType);
 }
 
-// Background Send to Formspree
-function sendFormData() {
-    const formData = new FormData(document.getElementById('estimateForm'));
-
-    fetch('https://formspree.io/f/xzzelklv', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok || response.type === 'opaqueredirect') {
-            console.log("Form successfully submitted to Formspree.");
-            window.location.href = `thank-you.html`;
-        } else {
-            console.error("Error submitting form to Formspree.");
-        }
-    }).catch(error => {
-        console.error("Fetch error:", error);
-    });
-}
-
 // On Thank You Page: Load stored estimate and timeline
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('estimateAmount')) {
@@ -145,11 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (document.getElementById('projectTimeline')) {
             document.getElementById('projectTimeline').innerText = timeline;
-        }
-
-        const saveEstimateBtn = document.getElementById('saveEstimateButton');
-        if (saveEstimateBtn && estimate) {
-            saveEstimateBtn.href = `mailto:?subject=Your New Castle Estimate & Next Steps&body=Hi,%0D%0A%0D%0AThank you for using the New Castle Estimate Calculator!%0D%0AHere’s your personalized project estimate range:%0D%0A${estimate}%0D%0A%0D%0ASchedule your free consultation here:%0D%0Ahttps://newcastleremodel.com/make-an-appointment%0D%0A%0D%0AThank you for choosing New Castle!`;
         }
     }
 });
