@@ -4,54 +4,43 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('projectSizeInput');
     const sizeLabel = document.getElementById('sizeLabel');
 
-    if (slider && input) {
-        slider.oninput = () => input.value = slider.value;
-        input.oninput = () => slider.value = input.value;
-    }
+    slider.oninput = () => input.value = slider.value;
+    input.oninput = () => slider.value = input.value;
 
-    const projectTypeField = document.getElementById('projectType');
-    if (projectTypeField && sizeLabel) {
-        projectTypeField.addEventListener('change', function () {
-            sizeLabel.innerText = this.value.includes('Sunroom')
-                ? "(Measured in Linear Feet)"
-                : "(Measured in Square Feet)";
-        });
-    }
+    document.getElementById('projectType').addEventListener('change', function () {
+        sizeLabel.innerText = this.value.includes('Sunroom')
+            ? "(Measured in Linear Feet)"
+            : "(Measured in Square Feet)";
+    });
 
     const emailField = document.querySelector('input[name="email"]');
     const replyToField = document.getElementById('hiddenReplyTo');
-    if (emailField && replyToField) {
-        emailField.addEventListener('input', () => {
-            replyToField.value = emailField.value;
-        });
-    }
+    emailField.addEventListener('input', () => {
+        replyToField.value = emailField.value;
+    });
 
-    const form = document.getElementById('estimateForm');
-    if (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            showInlineEstimate();
-            // ⏱️ 3 second delay before submit
-            setTimeout(() => form.submit(), 3000);
-        });
-    }
+    document.getElementById('calculateEstimateBtn')
+        .addEventListener('click', calculateAndShowEstimate);
 });
 
-function showInlineEstimate() {
+function calculateAndShowEstimate() {
+
     const projectType = document.getElementById('projectType').value;
     const finishQuality = document.getElementById('finishQuality').value;
     const size = Number(document.getElementById('projectSizeInput').value);
 
-    if (!projectType || !finishQuality || size <= 0) return;
-
-    let rate = 0;
-    switch (projectType) {
-        case "Custom Home": rate = 160; break;
-        case "Custom Garage": rate = 150; break;
-        case "Custom Home Addition": rate = 200; break;
-        case "Glass Sunroom (Walls Only)": rate = 350; break;
-        case "Eze-Breeze Sunroom (Walls Only)": rate = 250; break;
+    if (!projectType || !finishQuality || size <= 0) {
+        alert("Please complete all required project details.");
+        return;
     }
+
+    let rate = {
+        "Custom Home": 160,
+        "Custom Garage": 150,
+        "Custom Home Addition": 200,
+        "Glass Sunroom (Walls Only)": 350,
+        "Eze-Breeze Sunroom (Walls Only)": 250
+    }[projectType];
 
     let base = rate * size;
     if (finishQuality === "High-End") base *= 1.2;
@@ -61,11 +50,15 @@ function showInlineEstimate() {
 
     const estimateBox = document.getElementById('inlineEstimate');
     estimateBox.innerHTML = `
-        <h3 style="margin-top:20px;">Your Estimated Project Cost Range:</h3>
-        <strong>$${low.toLocaleString()} – $${high.toLocaleString()}</strong>
-        <p style="margin-top:10px;font-size:14px;color:#555;">
-            This estimate is based on typical construction costs and will be finalized during your free consultation.
-        </p>
+      <h3>Your Estimated Project Cost Range:</h3>
+      <strong>$${low.toLocaleString()} – $${high.toLocaleString()}</strong>
+      <p style="margin-top:10px;font-size:14px;color:#555;">
+        To receive your full estimate by email, continue below.
+      </p>
     `;
     estimateBox.style.display = "block";
+
+    document.getElementById('finalSubmitWrapper').style.display = "block";
+
+    estimateBox.scrollIntoView({ behavior: "smooth" });
 }
