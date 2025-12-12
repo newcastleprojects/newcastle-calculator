@@ -26,22 +26,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Two-step flow: calculate first (no submit)
     const calcBtn = document.getElementById('calculateEstimateBtn');
     if (calcBtn) {
         calcBtn.addEventListener('click', function () {
-            showInlineEstimateAndRevealSubmit();
+            calculateEstimateIfEmailValid();
         });
     }
 });
 
-function showInlineEstimateAndRevealSubmit() {
+function calculateEstimateIfEmailValid() {
+
+    const emailInput = document.querySelector('input[name="email"]');
+    const email = emailInput ? emailInput.value.trim() : "";
+
+    // ✅ Require valid email before showing estimate
+    if (!email || !isValidEmail(email)) {
+        alert("Please enter a valid email address to view your estimate.");
+        if (emailInput) emailInput.focus();
+        return;
+    }
+
     const projectTypeEl = document.getElementById('projectType');
     const finishQualityEl = document.getElementById('finishQuality');
     const sizeEl = document.getElementById('projectSizeInput');
-
-    // If this page doesn't have the calculator (e.g., thank-you page), exit safely
-    if (!projectTypeEl || !finishQualityEl || !sizeEl) return;
 
     const projectType = projectTypeEl.value;
     const finishQuality = finishQualityEl.value;
@@ -52,24 +59,21 @@ function showInlineEstimateAndRevealSubmit() {
         return;
     }
 
-    let rate = 0;
-    switch (projectType) {
-        case "Custom Home": rate = 160; break;
-        case "Custom Garage": rate = 150; break;
-        case "Custom Home Addition": rate = 200; break;
-        case "Glass Sunroom (Walls Only)": rate = 350; break;
-        case "Eze-Breeze Sunroom (Walls Only)": rate = 250; break;
-    }
+    const rates = {
+        "Custom Home": 160,
+        "Custom Garage": 150,
+        "Custom Home Addition": 200,
+        "Glass Sunroom (Walls Only)": 350,
+        "Eze-Breeze Sunroom (Walls Only)": 250
+    };
 
-    let base = rate * size;
+    let base = rates[projectType] * size;
     if (finishQuality === "High-End") base *= 1.2;
 
     const low = Math.round(base * 0.95);
     const high = Math.round(base * 1.10);
 
     const estimateBox = document.getElementById('inlineEstimate');
-    if (!estimateBox) return;
-
     estimateBox.innerHTML = `
         <h3 style="margin-top:20px;">Your Estimated Project Cost Range:</h3>
         <strong>$${low.toLocaleString()} – $${high.toLocaleString()}</strong>
@@ -83,4 +87,9 @@ function showInlineEstimateAndRevealSubmit() {
     if (finalWrapper) finalWrapper.style.display = "block";
 
     estimateBox.scrollIntoView({ behavior: "smooth" });
+}
+
+function isValidEmail(email) {
+    // Simple, reliable email validation
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
